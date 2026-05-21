@@ -1,0 +1,65 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Threatened Species 1980-2020",
+  "data": {
+    "url": "https://raw.githubusercontent.com/aasthas06/data_visualisation/refs/heads/main/global-living-planet-index.csv"
+  },
+  "width": 500,
+  "height": 300,
+  "params": [
+    {
+      "name": "Region_Selection",
+      "bind": {
+        "input": "select",
+        "options": [
+          null,
+          "Africa",
+          "Asia and Pacific",
+          "Europe and Central Asia",
+          "Latin America and the Caribbean",
+          "North America"
+        ],
+        "labels": [
+          "Show All",
+          "Africa",
+          "Asia-Pacific",
+          "Europe",
+          "Latin America",
+          "North America"
+        ],
+        "name": "Select Region: "
+      }
+    }
+  ],
+  "transform": [
+    {"filter": "datum.Year >= 1980"},
+    {"filter": "datum.Country != 'World' && datum.Country != 'Freshwater'"},
+    {
+      "filter": "Region_Selection == null || datum.Country == Region_Selection"
+    }
+  ],
+  "mark": {"type": "line"},
+  "encoding": {
+    "x": {
+      "field": "Year",
+      "type": "quantitative",
+      "axis": {"format": "d", "title": "Year"}
+    },
+    "y": {
+      "field": "Central estimate",
+      "type": "quantitative",
+      "title": "Central Estimate",
+      "scale": {"zero": false}
+    },
+    "color": {
+      "field": "Country",
+      "type": "nominal",
+      "title": "Region"
+    },
+    "tooltip": [
+      {"field": "Country", "type": "nominal"},
+      {"field": "Year", "type": "quantitative"},
+      {"field": "Central estimate", "type": "quantitative", "format": ".2f"}
+    ]
+  }
+}
