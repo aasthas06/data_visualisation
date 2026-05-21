@@ -1,0 +1,37 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Top Threatened Species in Victoria",
+  "description": "A bar chart that sorts the y-values by the x-values.",
+  "data": { "url": "https://raw.githubusercontent.com/aasthas06/data_visualisation/refs/heads/main/mostseenspecies.csv" },
+  "width": 500,
+  "height": 300,
+  "transform": [
+     {
+      "aggregate": [{"op": "count", "as": "TotalRecords"}],
+      "groupby": ["CommonName"]
+    },
+    {
+      "window": [{"op": "rank", "as": "rank"}],
+      "sort": [{"field": "TotalRecords", "order": "descending"}]
+    },
+    {
+      "filter": "datum.rank <= 12 || datum.CommonName == 'Leadbeater\\'s Possum'"
+    }
+  ],
+  "layer": [
+    {
+      "mark": {"type": "rule", "color": "lightgray"},
+      "encoding": {
+        "y": {"field": "CommonName", "type": "nominal", "title": "Species","sort": "-x"},
+        "x": {"field": "TotalRecords", "type": "quantitative","title": "Count"}
+      }
+    },
+    {
+      "mark": {"type": "circle", "color": "#2e8b57", "size": 150, "opacity": 1},
+      "encoding": {
+        "y": {"field": "CommonName", "type": "nominal", "title": "Species", "sort": "-x"},
+        "x": {"field": "TotalRecords", "type": "quantitative", "title": "Count"}
+      }
+    }
+  ]
+}
