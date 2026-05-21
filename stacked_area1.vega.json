@@ -1,0 +1,105 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Countries and their Threatened Species (2024)",
+  "data": {
+    "url": "https://raw.githubusercontent.com/aasthas06/data_visualisation/refs/heads/main/Threatened_Species.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "Value": "number",
+        "Year": "number"
+      }
+    }
+  },
+  "width": 500,
+  "height": 300,
+  "transform": [
+    {
+      "filter": "datum.Year == 2024"
+    },
+    {
+      "filter": "datum.Series != null && datum.Value != null"
+    },
+    {
+      "joinaggregate": [
+        {
+          "op": "sum",
+          "field": "Value",
+          "as": "Total_Per_Country"
+        }
+      ],
+      "groupby": [
+        "Country"
+      ]
+    },
+    {
+      "window": [
+        {
+          "op": "dense_rank",
+          "as": "rank"
+        }
+      ],
+      "sort": [
+        {
+          "field": "Total_Per_Country",
+          "order": "descending"
+        }
+      ],
+      "frame": [
+        null,
+        null
+      ]
+    },
+    {
+      "filter": "datum.rank <= 10 || datum['Country'] == 'Australia'"
+    }
+  ],
+  "mark": "bar",
+  "encoding": {
+    "x": {
+      "field": "Value",
+      "type": "quantitative",
+      "title": "Number of Threatened Species"
+    },
+    "y": {
+      "field": "Country",
+      "type": "nominal",
+      "sort": {
+        "field": "Total_Per_Country",
+        "order": "descending"
+      },
+      "title": "Country",
+      "axis": {
+        "labelAngle": 0
+      }
+    },
+    "color": {
+      "field": "Series",
+      "type": "nominal",
+      "scale": {
+        "scheme": "tableau10"
+      },
+      "legend": {
+        "title": "Species Group",
+        "labelExpr": "replace(replace(datum.label, 'Threatened Species: ', ''), ' (number)', '')"
+      }
+    },
+    "tooltip": [
+      {
+        "field": "Country",
+        "type": "nominal",
+        "title": "Country"
+      },
+      {
+        "field": "Series",
+        "type": "nominal",
+        "title": "Category"
+      },
+      {
+        "field": "Value",
+        "type": "quantitative",
+        "title": "Count"
+      }
+    ]
+  }
+}
