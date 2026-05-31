@@ -1,0 +1,88 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Causes of Endangerment in Australia",
+    "anchor": "middle",
+    "dy": -5,
+    "offset": 5,
+    "fontSize": 20,
+    "color": "#006400"
+  },
+  "background": "transparent",
+  "description": "Bar chart of threats to species, sorted by percentage.",
+  "width": 700,
+  "height": 400,
+  "data": {
+    "values": [
+      {"Cause": "Invasive species & diseases", "Percentage": 42.2},
+      {"Cause": "Habitat loss, fragmentation & degradation", "Percentage": 26.6},
+      {"Cause": "Adverse fire regimes", "Percentage": 23.1},
+      {"Cause": "Climate change & severe weather", "Percentage": 8.2},
+      {"Cause": "Disrupted ecosystem processes", "Percentage": 5.5},
+      {"Cause": "Overexploitation & direct human impacts", "Percentage": 4.1},
+      {"Cause": "Changed water regimes", "Percentage": 3.6},
+      {"Cause": "Pollution", "Percentage": 1.1}
+    ]
+  },
+  "mark": {
+    "type": "bar",
+    "tooltip": true,
+    "color": "#916e52",
+    "stroke": "#595959",
+    "strokeWidth": 1
+  },
+  "encoding": {
+    "y": {
+      "field": "Cause",
+      "type": "nominal",
+      "title": "Cause",
+      "sort": "-x",
+      "axis": {
+        "ticks": false,
+        "domain": false,
+        "labelLimit": 300,
+  
+        "titleFontSize": 16
+      }
+    },
+    "x": {
+      "field": "Percentage",
+      "type": "quantitative",
+      "title": "Percentage of threatened species (%)",
+      "axis": {
+        "grid": true,
+        "gridOpacity": 0.3,
+        "labelFontSize": 14,
+        "titleFontSize": 16
+      }
+    },
+    "tooltip": [
+      {"field": "Cause", "title": "Cause"},
+      {"field": "Percentage", "title": "Percentage (%)", "type": "quantitative"}
+    ],
+    "opacity": {
+      "condition": {"param": "hover", "value": 1},
+      "value": 0.7
+    }
+  },
+  "params": [
+    {
+      "name": "hover",
+      "select": {"type": "point", "on": "pointerover", "clear": "pointerout"}
+    }
+  ],
+  "config": {
+    "bar": {
+      "discreteBandSize": 45
+    },
+    "view": {
+      "fill": "transparent",
+      "stroke": "transparent"
+    },
+    "font": "system-ui, sans-serif",
+    "axis": {
+      "labelColor": "#000000",
+      "titleColor": "#000000"
+    }
+  }
+}
