@@ -1,0 +1,95 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Percentage of Endangered Species",
+    "fontSize": 20,
+    "anchor": "middle",
+    "dy": -10,
+    "offset": 5,
+    "color": "#006400"
+  },
+  "background": "transparent",
+  "description": "A mathematically correct donut chart showing each species' share of total threatened animals in Australia, summing perfectly to 100%.",
+  "width": 400,
+  "height": 300,
+  "data": {
+    "values": [
+      {"species": "Mammals", "threatened_count": 78, "share_of_total_threatened": 31.7},
+      {"species": "Birds", "threatened_count": 50, "share_of_total_threatened": 20.3},
+      {"species": "Reptiles", "threatened_count": 46, "share_of_total_threatened": 18.7},
+      {"species": "Amphibia", "threatened_count": 31, "share_of_total_threatened": 12.6},
+      {"species": "Fishes", "threatened_count": 41, "share_of_total_threatened": 16.7},
+      {"species": "Cephalochordata", "threatened_count": 0, "share_of_total_threatened": 0.0},
+      {"species": "Tunicata", "threatened_count": 0, "share_of_total_threatened": 0.0}
+    ]
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "arc",
+        "innerRadius": 50,
+        "outerRadius": 150,
+        "stroke": "#5a5a58",
+        "strokeWidth": 0.5
+      },
+      "encoding": {
+        "theta": {
+          "field": "share_of_total_threatened",
+          "type": "quantitative",
+          "stack": true
+        },
+        "color": {
+          "field": "species",
+          "type": "nominal",
+          "legend": {
+            "title": "Species",
+            "titleFontSize": 18,
+            "labelFontSize": 16,
+            "symbolSize": 300
+          },
+          "scale": {
+            "domain": ["Amphibia", "Mammals", "Birds", "Fishes", "Reptiles"],
+            "range": ["#8FBC8B", "#BE8260", "#87CEEB", "#20B2AA", "#DEB887"]
+          }
+        },
+        "order": {
+          "field": "species",
+          "type": "nominal"
+        },
+        "tooltip": [
+          {"field": "species", "type": "nominal", "title": "Species Group"},
+          {"field": "threatened_count", "type": "quantitative", "title": "Threatened Count"},
+          {"field": "share_of_total_threatened", "type": "quantitative", "title": "% Share of Total Threatened", "format": ".1f"}
+        ]
+      }
+    },
+    {
+      "transform": [
+        {"filter": "datum.share_of_total_threatened > 1.5"}
+      ],
+      "mark": {
+        "type": "text",
+        "radius": 110,
+        "fontSize": 16,
+        "fontWeight": "bold",
+        "fill": "black"
+      },
+      "encoding": {
+        "theta": {
+          "field": "share_of_total_threatened",
+          "type": "quantitative",
+          "stack": true
+        },
+        "text": {
+          "field": "share_of_total_threatened",
+          "type": "quantitative",
+          "format": ".1f"
+        },
+        "order": {
+          "field": "species",
+          "type": "nominal"
+        }
+      }
+    }
+  ]
+}
