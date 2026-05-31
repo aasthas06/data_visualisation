@@ -1,0 +1,87 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "background": "transparent",
+  "title": {
+    "text": "Use of Land in Australia",
+    "anchor": "middle",
+    "dy": -10,
+    "fontSize": 20,
+    "color": "#006400"
+  },
+  "width": 600,
+  "height": 400,
+  "data": {
+    "values": [
+      {"land_use": "Nature conservation", "year": "2010-11", "hectares": 64.7},
+      {"land_use": "Nature conservation", "year": "2015-16", "hectares": 72.0},
+      {"land_use": "Nature conservation", "year": "2020-21", "hectares": 72.2},
+      {"land_use": "Managed resource protection", "year": "2010-11", "hectares": 124.5},
+      {"land_use": "Managed resource protection", "year": "2015-16", "hectares": 135.2},
+      {"land_use": "Managed resource protection", "year": "2020-21", "hectares": 149.3},
+      {"land_use": "Other minimal use", "year": "2010-11", "hectares": 124.5},
+      {"land_use": "Other minimal use", "year": "2015-16", "hectares": 103.4},
+      {"land_use": "Other minimal use", "year": "2020-21", "hectares": 82.9},
+      {"land_use": "Grazing native vegetation", "year": "2010-11", "hectares": 333.6},
+      {"land_use": "Grazing native vegetation", "year": "2015-16", "hectares": 332.4},
+      {"land_use": "Grazing native vegetation", "year": "2020-21", "hectares": 335.2},
+      {"land_use": "Production native forests", "year": "2010-11", "hectares": 7.8},
+      {"land_use": "Production native forests", "year": "2015-16", "hectares": 7.8},
+      {"land_use": "Production native forests", "year": "2020-21", "hectares": 8.6},
+      {"land_use": "Grazing modified pastures", "year": "2010-11", "hectares": 45.8},
+      {"land_use": "Grazing modified pastures", "year": "2015-16", "hectares": 45.3},
+      {"land_use": "Grazing modified pastures", "year": "2020-21", "hectares": 47.8},
+      {"land_use": "Dryland cropping", "year": "2010-11", "hectares": 32.2},
+      {"land_use": "Dryland cropping", "year": "2015-16", "hectares": 35.7},
+      {"land_use": "Dryland cropping", "year": "2020-21", "hectares": 35.9},
+      {"land_use": "Water", "year": "2010-11", "hectares": 26.8},
+      {"land_use": "Water", "year": "2015-16", "hectares": 26.7},
+      {"land_use": "Water", "year": "2020-21", "hectares": 26.7},
+      {"land_use": "Other land use", "year": "2010-11", "hectares": 9.7},
+      {"land_use": "Other land use", "year": "2015-16", "hectares": 11.2},
+      {"land_use": "Other land use", "year": "2020-21", "hectares": 11.0}
+    ]
+  },
+  "mark": {"type": "bar", "stroke": "#5a5a58", "strokeWidth": 1},
+  "encoding": {
+    "y": {
+      "field": "land_use",
+      "type": "nominal",
+      "sort": {"op": "sum", "field": "hectares", "order": "descending"},
+      "title": "Land Use Class",
+      "axis": {
+        "labelAngle": 0,
+        "titleFontSize": 16,
+        "labelFontSize": 14
+      }
+    },
+    "x": {
+      "field": "hectares",
+      "type": "quantitative",
+      "title": "Million Hectares",
+      "axis": {
+        "titleFontSize": 16,
+        "labelFontSize": 14
+      }
+    },
+    "yOffset": {"field": "year"},
+    "color": {
+      "field": "year",
+      "title": "Year",
+      "scale": {
+        "domain": ["2010-11", "2015-16", "2020-21"],
+        "range": ["#A0E9A0", "#7DCEA0", "#1E8449"]
+      },
+      "legend": {
+        "titleFontSize": 18,
+        "labelFontSize": 16,
+        "symbolSize": 400,
+        "symbolStrokeWidth": 2
+      }
+    },
+    "tooltip": [
+      {"field": "land_use", "type": "nominal", "title": "Class"},
+      {"field": "year", "type": "nominal", "title": "Year"},
+      {"field": "hectares", "type": "quantitative", "title": "Area (Million Hectares)", "format": ".1f"}
+    ]
+  }
+}
