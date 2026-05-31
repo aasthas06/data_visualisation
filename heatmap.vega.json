@@ -1,0 +1,204 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "background": "transparent",
+  "title": {
+    "text": "Australian Forest Fire: Burnt Area by State & Season",
+    "anchor": "middle",
+    "dy": -5,
+    "fontSize": 20,
+    "offset": 5,
+    "color": "#006400"
+  },
+  "width": 600,
+  "height": 400,
+  "data": {
+    "values": [
+      {"state": "ACT", "season": "2016-17", "count": 648},
+      {"state": "ACT", "season": "2017-18", "count": 1635},
+      {"state": "ACT", "season": "2018-19", "count": 2504},
+      {"state": "ACT", "season": "2019-20", "count": 88278},
+      {"state": "ACT", "season": "2020-21", "count": 276},
+      {"state": "NSW", "season": "2016-17", "count": 289727},
+      {"state": "NSW", "season": "2017-18", "count": 299364},
+      {"state": "NSW", "season": "2018-19", "count": 274264},
+      {"state": "NSW", "season": "2019-20", "count": 5434275},
+      {"state": "NSW", "season": "2020-21", "count": 69403},
+      {"state": "NT",  "season": "2016-17", "count": 11911645},
+      {"state": "NT",  "season": "2017-18", "count": 29842669},
+      {"state": "NT",  "season": "2018-19", "count": 18306379},
+      {"state": "NT",  "season": "2019-20", "count": 12565536},
+      {"state": "NT",  "season": "2020-21", "count": 10698700},
+      {"state": "Qld", "season": "2016-17", "count": 7525259},
+      {"state": "Qld", "season": "2017-18", "count": 5935390},
+      {"state": "Qld", "season": "2018-19", "count": 6745185},
+      {"state": "Qld", "season": "2019-20", "count": 5909144},
+      {"state": "Qld", "season": "2020-21", "count": 4208169},
+      {"state": "SA",  "season": "2016-17", "count": 36130},
+      {"state": "SA",  "season": "2017-18", "count": 140618},
+      {"state": "SA",  "season": "2018-19", "count": 186696},
+      {"state": "SA",  "season": "2019-20", "count": 321918},
+      {"state": "SA",  "season": "2020-21", "count": 36524},
+      {"state": "Tas", "season": "2016-17", "count": 63768},
+      {"state": "Tas", "season": "2017-18", "count": 49923},
+      {"state": "Tas", "season": "2018-19", "count": 239996},
+      {"state": "Tas", "season": "2019-20", "count": 76769},
+      {"state": "Tas", "season": "2020-21", "count": 27026},
+      {"state": "Vic", "season": "2016-17", "count": 60905},
+      {"state": "Vic", "season": "2017-18", "count": 94509},
+      {"state": "Vic", "season": "2018-19", "count": 262644},
+      {"state": "Vic", "season": "2019-20", "count": 1539074},
+      {"state": "Vic", "season": "2020-21", "count": 78801},
+      {"state": "WA",  "season": "2016-17", "count": 1060987},
+      {"state": "WA",  "season": "2017-18", "count": 745200},
+      {"state": "WA",  "season": "2018-19", "count": 820891},
+      {"state": "WA",  "season": "2019-20", "count": 1374363},
+      {"state": "WA",  "season": "2020-21", "count": 332109}
+    ]
+  },
+  "layer": [
+    {
+      "params": [{"name": "highlight", "select": "point"}],
+      "mark": {
+        "type": "rect",
+        "stroke": "black",
+        "color": "#5a5a58",
+        "strokeWidth": 2.5
+      },
+      "encoding": {
+        "x": {
+          "field": "season",
+          "type": "ordinal",
+          "title": "Fire Season",
+          "sort": ["2016-17", "2017-18", "2018-19", "2019-20", "2020-21"],
+          "axis": {
+            "labelFontSize": 12,
+            "titleFontSize": 13,
+            "titlePadding": 10,
+            "labelAngle": 0
+          }
+        },
+        "y": {
+          "field": "state",
+          "type": "nominal",
+          "title": "State",
+          "sort": ["NT", "Qld", "WA", "NSW", "Vic", "SA", "Tas", "ACT"],
+          "axis": {
+            "labelFontSize": 12,
+            "titleFontSize": 13,
+            "titlePadding": 10
+          }
+        },
+        "fill": {
+          "field": "count",
+          "type": "quantitative",
+          "title": "Burnt Area (Pixels) ",
+          "scale": {"type": "symlog", "scheme": "reds"},
+          "legend": {
+            "titleFontSize": 12,
+            "labelFontSize": 11,
+            "format": "~s"
+          }
+        },
+        "stroke": {
+          "condition": {
+            "param": "highlight",
+            "empty": false,
+            "value": "black"
+          },
+          "value": null
+        },
+        "opacity": {
+          "condition": {"param": "highlight", "value": 1},
+          "value": 0.5
+        },
+        "order": {
+          "condition": {"param": "highlight", "value": 1},
+          "value": 0
+        },
+        "tooltip": [
+          {"field": "state",  "type": "nominal",      "title": "State"},
+          {"field": "season", "type": "ordinal",      "title": "Fire Season"},
+          {"field": "count",  "type": "quantitative", "title": "Burnt Area", "format": ","}
+        ]
+      }
+    },
+    {
+      "data": {"values": [{"season": "2019-20"}]},
+      "mark": {
+        "type": "rule",
+        "color": "#000000",
+        "strokeWidth": 3
+      },
+      "encoding": {
+        "x": {
+          "field": "season",
+          "type": "ordinal",
+          "sort": ["2016-17", "2017-18", "2018-19", "2019-20", "2020-21"]
+        },
+        "y": {"value": -50},
+        "y2": {"value": -15}
+      }
+    },
+    {
+      "data": {"values": [{"season": "2019-20"}]},
+      "mark": {
+        "type": "point",
+        "shape": "triangle-down",
+        "color": "#000000",
+        "filled": true,
+        "size": 130
+      },
+      "encoding": {
+        "x": {
+          "field": "season",
+          "type": "ordinal",
+          "sort": ["2016-17", "2017-18", "2018-19", "2019-20", "2020-21"]
+        },
+        "y": {"value": -10}
+      }
+    },
+    {
+      "data": {"values": [{"season": "2019-20", "label": " Black Summer"}]},
+      "mark": {
+        "type": "text",
+        "align": "center",
+        "baseline": "bottom",
+        "dy": -60,
+        "fontSize": 15,
+        "fontStyle": "italic",
+        "fontWeight": "bold",
+        "color": "#000000"
+      },
+      "encoding": {
+        "x": {
+          "field": "season",
+          "type": "ordinal",
+          "sort": ["2016-17", "2017-18", "2018-19", "2019-20", "2020-21"]
+        },
+        "text": {"field": "label", "type": "nominal"}
+      }
+    },
+    {
+      "data": {"values": [{"text": "1 pixel = 25 hectares"}]},
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "x": 20,
+        "y": 450,
+        "fontSize": 14,
+        "color": "#333333"
+      },
+      "encoding": {
+        "text": {"field": "text", "type": "nominal"}
+      }
+    }
+  ],
+  "config": {
+    "scale": {
+      "bandPaddingInner": 0.05,
+      "bandPaddingOuter": 0.05
+    },
+    "axis": {"domain": false},
+    "view": {"stroke": "black", "strokeWidth": 1.5}
+  }
+}
