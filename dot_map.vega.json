@@ -1,0 +1,109 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "background": "transparent",
+  "width": 1000,
+  "height": 800,
+  "title": {
+    "text": "Wildlife Sightings in Melbourne (2014)",
+    "fontSize": 20,
+    "color": "#006400"
+  },
+  "params": [
+    {
+      "name": "taxa_selection",
+      "value": "All",
+      "bind": {
+        "input": "select",
+        "options": ["All", "Bird", "Plant", "Insect", "Mammal", "Fish", "Reptile", "Amphibian"],
+        "name": "Select Group: "
+      }
+    }
+  ],
+  "layer": [
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/aasthas06/data_visualisation/refs/heads/main/municipal-boundary.geojson",
+        "format": { "type": "json" }
+      },
+      "projection": {
+    "type": "mercator",
+    "center": [144.94, -37.81],
+    "scale": 400000 
+  },
+      "mark": {
+        "type": "geoshape",
+        "fill": "#d9e8d9",
+        "stroke": "#5a5a58",
+        "strokeWidth": 0.5
+      }
+    },
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/aasthas06/data_visualisation/refs/heads/main/wildlife_sightings_vic2014.csv"
+      },
+      "transform": [
+        { "filter": "datum.latitude !== '' && datum.longitude !== ''" },
+        { "filter": "indexof(['Bird','Plant','Insect','Mammal','Fish','Reptile','Amphibian'], datum.taxa) >= 0" },
+        { "filter": "taxa_selection === 'All' || datum.taxa === taxa_selection" },
+        {
+          "aggregate": [{ "op": "count", "as": "sighting_count" }],
+          "groupby": ["latitude", "longitude", "taxa"]
+        }
+      ],
+      "projection": {
+    "type": "mercator",
+    "center": [144.94, -37.81],
+    "scale": 400000 
+  },
+      "mark": {
+        "type": "circle",
+        "opacity": 0.75,
+        "stroke": "white",
+        "strokeWidth": 0.5
+      },
+      "encoding": {
+        "longitude": { "field": "longitude", "type": "quantitative" },
+        "latitude": { "field": "latitude", "type": "quantitative" },
+        "size": {
+          "field": "sighting_count",
+          "type": "quantitative",
+          "title": "Sightings",
+          "scale": { "type": "sqrt", "range": [30, 900], "zero": false },
+          "legend": { 
+            "values": [1, 5, 20, 50, 100, 131],
+            "orient": "left",
+            "direction": "vertical",
+            "symbolType": "circle",
+            "padding": 5,
+            "titleFontSize": 18,
+            "labelFontSize": 16,
+            "symbolSize": 800
+          }
+        },
+       "color": {
+  "field": "taxa",
+  "type": "nominal",
+  "title": "Group",
+  "scale": {
+    "domain": ["Bird", "Plant", "Insect", "Mammal", "Fish", "Reptile", "Amphibian"],
+    "range": ["#87CEEB", "#004708", "#FFA07A", "#BE8260", "#20B2AA", "#DEB887", "#8FBC8B"]
+  },
+  "legend": {
+    "orient": "right",
+    "direction": "vertical",
+    "titleFontSize": 18,
+    "labelFontSize": 16,
+    "symbolSize": 800,
+    "padding": 10
+  }
+},
+        "tooltip": [
+          { "field": "taxa", "title": "Taxa" },
+          { "field": "sighting_count", "title": "Sightings" },
+          { "field": "latitude", "title": "Latitude" },
+          { "field": "longitude", "title": "Longitude" }
+        ]
+      }
+    }
+  ]
+}
