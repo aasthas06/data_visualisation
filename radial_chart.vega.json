@@ -1,0 +1,72 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Environmental Volunteering Hours in Victoria (2024)",
+    "fontSize": 20,
+    "anchor": "middle",
+    "dy": -10,
+    "offset": 10,
+    "color": "#006400"
+  },
+  "background": "transparent",
+  "description": "Radial Rose chart with percentage labels.",
+  "height": 600,
+  "width": 450,
+  "data": {
+    "values": [
+      {"Activity": "Caring for landscapes", "Percentages": 35},
+      {"Activity": "Recreation/Nature", "Percentages": 20},
+      {"Activity": "Citizen Science", "Percentages": 19},
+      {"Activity": "Sustainable Living", "Percentages": 11},
+      {"Activity": "Other", "Percentages": 8},
+      {"Activity": "Wildlife rescue", "Percentages": 7}
+    ]
+  },
+  "transform": [
+    {"calculate": "datum.Percentages + '%'", "as": "percentage_label"}
+  ],
+  "layer": [
+    {"mark": {"type": "arc", "innerRadius": 22, "stroke": "#5a5a58", "size": 20}},
+    {
+      "mark": {"type": "text", "radiusOffset": -50, "fill": "black", "fontSize": 14},
+      "encoding": {
+        "text": {"field": "percentage_label", "type": "nominal"}
+      }
+    }
+  ],
+  "encoding": {
+    "theta": {"field": "Percentages", "type": "quantitative", "stack": true},
+    "radius": {
+      "field": "Percentages",
+      "type": "quantitative",
+      "scale": {"type": "sqrt", "zero": true, "rangeMin": 20}
+    },
+    "color": {
+      "field": "Activity",
+      "type": "nominal",
+      "scale": {
+        "domain": [
+          "Caring for landscapes",
+          "Recreation/Nature",
+          "Citizen Science",
+          "Sustainable Living",
+          "Other",
+          "Wildlife rescue"
+        ],
+        "range": ["#AAD24B", "#4FA89A", "#90EE90", "#FF6347", "#5C8DB8", "#D97A5F"]
+      },
+      "legend": {
+        "title": "Activity Type",
+        "titleFontSize": 16,
+        "labelFontSize": 14,
+        "symbolSize": 200,
+        "columnPadding": 10
+      }
+    },
+    "order": {
+      "field": "Percentages",
+      "type": "quantitative",
+      "sort": "descending"
+    }
+  }
+}
