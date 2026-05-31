@@ -1,0 +1,109 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "background": "transparent",
+  "description": "Slope chart showing change in protected area % for Terrestrial (2004-2024) and Marine (2008-2024) in Australia.",
+  "title": {
+    "text": "Growth in Australia's Protected Areas",
+    "subtitle": "Percentage of land and water dedicated to conservation",
+    "fontSize": 20,
+    "subtitleFontSize": 12,
+    "anchor": "middle",
+    "dy": -5,
+    "offset": 5,
+    "color": "#006400"
+  },
+  "width": {"step": 250},
+  "height": 500,
+  "data": {
+    "values": [
+      {"year": "2004", "pct": 11, "category": "Terrestrial"},
+      {"year": "2024", "pct": 23, "category": "Terrestrial"},
+      {"year": "2008", "pct": 10, "category": "Marine"},
+      {"year": "2024", "pct": 49, "category": "Marine"}
+    ]
+  },
+  "layer": [
+    {
+      "mark": {"type": "line", "strokeWidth": 4, "opacity": 1},
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "ordinal",
+          "scale": {"padding": 0.5},
+          "axis": {
+            "title": "Year",
+            "labelFontSize": 14,
+            "titleFontSize": 16,
+            "labelFontWeight": "bold",
+            "domain": false,
+            "ticks": false,
+            "grid": false,
+            "labelAngle": 0
+          }
+        },
+        "y": {
+          "field": "pct",
+          "type": "quantitative",
+          "scale": {"domain": [0, 60], "padding": 20},
+          "axis": {
+            "title": "Protected Area (%)",
+            "titleFontSize": 16,
+            "labelFontSize": 14,
+            "grid": true,
+            "gridDash": [3, 3],
+            "format": "d"
+          }
+        },
+        "color": {
+  "field": "category",
+  "type": "nominal",
+  "scale": {
+    "domain": ["Terrestrial", "Marine"],
+    "range": ["#148F56", "#2245DD"]
+  },
+  "legend": {
+    "title": "Area Type",
+    "titleFontSize": 18,
+    "labelFontSize": 16,
+    "symbolSize": 300,
+    "symbolStrokeWidth": 5,
+    "orient": "top-left",
+    "legendX": 50,
+    "legendY": -20
+  }
+}
+      }
+    },
+    {
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "size": 170,
+        "stroke": "#5a5a58",
+        "strokeWidth": 1.5,
+        "opacity": 1
+      },
+      "encoding": {
+        "x": {"field": "year", "type": "ordinal", "scale": {"padding": 0.5}},
+        "y": {"field": "pct", "type": "quantitative"},
+        "color": {
+          "field": "category",
+          "type": "nominal",
+          "scale": {
+            "domain": ["Terrestrial", "Marine"],
+            "range": ["#27ae60", "#2980b9"]
+          }
+        },
+        "tooltip": [
+          {"field": "category", "title": "Type"},
+          {"field": "year", "title": "Year"},
+          {"field": "pct", "title": "Protected (%)", "format": ".0f"}
+        ]
+      }
+    }
+  ],
+  "config": {
+    "view": {"stroke": null},
+    "axis": {"domain": false}
+  }
+}
