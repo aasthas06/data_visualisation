@@ -1,13 +1,18 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "background": "transparent",
   "title": {
     "text": "Threatened Species Per State in Australia",
-    "anchor": "start"
+    "anchor": "middle",
+    "dy": -5,
+    "offset": 5,
+    "fontSize": 20,
+    "color": "#006400"
   },
   "data": {
     "url": "https://raw.githubusercontent.com/aasthas06/data_visualisation/refs/heads/main/birds_vs_mammals3.csv"
   },
-  "width": 500,
+  "width": 550,
   "height": 300,
   "transform": [
     {
@@ -24,42 +29,56 @@
       "as": "SignedCount"
     }
   ],
-  "mark": "bar",
-  "encoding": {
-    "y": {
-      "field": "State",
-      "type": "nominal",
-      "title": null,
-      "sort": "-x"
-    },
-    "x": {
-      "field": "SignedCount",
-      "type": "quantitative",
-      "title": "Species",
-      "axis": {
-        "labelExpr": "abs(datum.value)",
-        "format": "d",
-        "tickCount": 5
+  "layer": [
+    {
+      "mark": {"type": "bar", "stroke": "#595959", "strokeWidth": 1},
+      "encoding": {
+        "y": {
+          "field": "State",
+          "type": "nominal",
+          "title": "State",
+          "axis": {
+            "titleFontSize": 16,
+            "labelFontSize": 14
+          }
+        },
+        "x": {
+          "field": "SignedCount",
+          "type": "quantitative",
+          "title": "Species Count",
+          "axis": {
+            "titleFontSize": 16,
+            "labelFontSize": 14,
+            "labelExpr": "abs(datum.value)",
+            "format": "d"
+          }
+        },
+        "color": {
+          "field": "TaxonomicGroup",
+          "type": "nominal",
+          "scale": {
+            "domain": ["Mammals", "Birds"],
+            "range": ["#BE8260", "#87CEEB"]
+          },
+          "legend": {
+            "orient": "right",
+            "title": "Threatened Group",
+            "titleFontSize": 14,
+            "labelFontSize": 13
+          }
+        },
+        "tooltip": [
+          {"field": "State", "type": "nominal"},
+          {"field": "TaxonomicGroup", "type": "nominal", "title": "Group"},
+          {"field": "SpeciesCount", "type": "quantitative", "title": "Unique Species"}
+        ]
       }
     },
-    "color": {
-      "field": "TaxonomicGroup",
-      "type": "nominal",
-      "scale": {
-        "domain": ["Mammals", "Birds"],
-        "range": ["#e66101", "#5e3c99"]
-      },
-      "legend": {
-        "orient": "top",
-        "title": "Threatened Group"
-      }
-    },
-    "tooltip": [
-      {"field": "State", "type": "nominal"},
-      {"field": "TaxonomicGroup", "type": "nominal", "title": "Group"},
-      {"field": "SpeciesCount", "type": "quantitative", "title": "Unique Species"}
-    ]
-  },
+    {
+      "mark": {"type": "rule", "color": "#9e9e99", "strokeWidth": 2},
+      "encoding": {"x": {"datum": 0}}
+    }
+  ],
   "config": {
     "view": {"stroke": null},
     "axis": {"grid": false}
