@@ -1,65 +1,101 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": "Threatened Species 1980-2020",
+  "background": "transparent",
+  "title": {
+    "text": "Relative Change in Wildlife Population Abundance 1980-2020",
+    "dy": -20,
+    "fontSize": 20,
+    "color": "#006400"
+  },
   "data": {
     "url": "https://raw.githubusercontent.com/aasthas06/data_visualisation/refs/heads/main/global-living-planet-index.csv"
   },
-  "width": 500,
-  "height": 300,
+  "width": 600,
+  "height": 400,
   "params": [
     {
       "name": "Region_Selection",
       "bind": {
         "input": "select",
-        "options": [
-          null,
-          "Africa",
-          "Asia and Pacific",
-          "Europe and Central Asia",
-          "Latin America and the Caribbean",
-          "North America"
-        ],
-        "labels": [
-          "Show All",
-          "Africa",
-          "Asia-Pacific",
-          "Europe",
-          "Latin America",
-          "North America"
-        ],
+        "options": [null, "Africa", "Asia and Pacific", "Europe and Central Asia", "Latin America and the Caribbean", "North America"],
+        "labels": ["Show All", "Africa", "Asia-Pacific", "Europe", "Latin America", "North America"],
         "name": "Select Region: "
       }
     }
   ],
   "transform": [
     {"filter": "datum.Year >= 1980"},
-    {"filter": "datum.Country != 'World' && datum.Country != 'Freshwater'"},
-    {
-      "filter": "Region_Selection == null || datum.Country == Region_Selection"
-    }
+    {"filter": "datum.Country != 'World' && datum.Country != 'Freshwater'"}
   ],
-  "mark": {"type": "line"},
-  "encoding": {
-    "x": {
-      "field": "Year",
-      "type": "quantitative",
-      "axis": {"format": "d", "title": "Year"}
-    },
-    "y": {
-      "field": "Central estimate",
-      "type": "quantitative",
-      "title": "Central Estimate",
-      "scale": {"zero": false}
-    },
-    "color": {
-      "field": "Country",
-      "type": "nominal",
-      "title": "Region"
-    },
-    "tooltip": [
-      {"field": "Country", "type": "nominal"},
-      {"field": "Year", "type": "quantitative"},
-      {"field": "Central estimate", "type": "quantitative", "format": ".2f"}
-    ]
+  "layer": [
+    {
+      "description": "Visual Line Layer",
+      "mark": {"type": "line", "strokeWidth": 3},
+      "encoding": {
+        "x": {
+          "field": "Year",
+          "type": "quantitative",
+          "axis": {"format": "d", "title": "Year"}
+        },
+        "y": {
+          "field": "Central estimate",
+          "type": "quantitative",
+          "scale": {"zero": false}
+        },
+        
+        "color": {
+  "field": "Country",
+  "type": "nominal",
+  "scale": {
+    "domain": ["Africa", "Asia and Pacific", "Europe and Central Asia", "Latin America and the Caribbean", "North America"],
+    "range": ["#8B4513", "#DC143C", "#00BFFF", "#1E90FF", "#008080"]
+  },
+  "legend": {
+    "title": "Region",
+    "titleFontSize": 18,
+    "labelFontSize": 18,
+    "symbolSize": 400,
+    "symbolStrokeWidth": 4,
+    "orient": "right"
   }
+},
+        "opacity": {
+          "condition": [
+            {
+              "test": "(hover_country.Country == datum.Country) || (Region_Selection == null) || (Region_Selection == datum.Country)",
+              "value": 1
+            }
+          ],
+          "value": 0.15
+        }
+      }
+    },
+    {
+      "description": "Interaction Layer",
+      "mark": {"type": "line", "strokeWidth": 20, "stroke": "transparent"},
+      "params": [
+        {
+          "name": "hover_country",
+          "select": {
+            "type": "point",
+            "on": "mouseover",
+            "fields": ["Country"],
+            "toggle": false,
+            "clear": "mouseout",
+            "nearest": false,
+            "empty": false
+          }
+        }
+      ],
+      "encoding": {
+        "x": {"field": "Year", "type": "quantitative"},
+        "y": {"field": "Central estimate", "type": "quantitative"},
+        "tooltip": [
+          {"field": "Country", "type": "nominal"},
+          {"field": "Year", "type": "quantitative"},
+          {"field": "Central estimate", "type": "quantitative", "format": ".2f"}
+        ]
+      }
+    }
+  ]
 }
