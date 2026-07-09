@@ -9,7 +9,7 @@
     "dy": -10
   },
   "data": {
-    "url": "https://raw.githubusercontent.com/aasthas06/data_visualisation/refs/heads/main/mostseenspecies.csv"
+    "url": "mostseenspecies.csv"
   },
   "width": 600,
   "height": 400,

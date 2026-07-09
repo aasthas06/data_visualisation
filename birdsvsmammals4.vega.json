@@ -10,7 +10,7 @@
     "color": "#006400"
   },
   "data": {
-    "url": "https://raw.githubusercontent.com/aasthas06/data_visualisation/refs/heads/main/birds_vs_mammals3.csv"
+    "url": "birds_vs_mammals3.csv"
   },
   "width": 550,
   "height": 300,

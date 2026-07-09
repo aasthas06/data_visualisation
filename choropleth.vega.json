@@ -40,7 +40,7 @@
   "layer": [
     {
       "data": {
-        "url": "https://raw.githubusercontent.com/alwaysblazing/Australia-State-TopoJson-MapChart/refs/heads/master/au-states-topo.json",
+        "url": "au-states-topo.json",
         "format": {"type": "topojson", "feature": "austates"}
       },
       "transform": [

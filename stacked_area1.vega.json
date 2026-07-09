@@ -12,7 +12,7 @@
   "width": 600,
   "height": 400,
   "data": {
-    "url": "https://raw.githubusercontent.com/aasthas06/data_visualisation/refs/heads/main/Threatened_Species.csv",
+    "url": "Threatened_Species.csv",
     "format": { "type": "csv", "parse": { "Year": "number" } }
   },
   "transform": [

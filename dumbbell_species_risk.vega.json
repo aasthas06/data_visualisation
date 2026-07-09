@@ -12,7 +12,7 @@
   "width": 600,
   "height": 400,
   "data": {
-    "url": "https://raw.githubusercontent.com/aasthas06/data_visualisation/refs/heads/main/Species_risk.csv",
+    "url": "Species_risk.csv",
     "format": {"type": "csv"}
   },
   "transform": [

@@ -22,7 +22,7 @@
   "layer": [
     {
       "data": {
-        "url": "https://raw.githubusercontent.com/aasthas06/data_visualisation/refs/heads/main/municipal-boundary.geojson",
+        "url": "municipal-boundary.geojson",
         "format": { "type": "json" }
       },
       "projection": {
@@ -39,7 +39,7 @@
     },
     {
       "data": {
-        "url": "https://raw.githubusercontent.com/aasthas06/data_visualisation/refs/heads/main/wildlife_sightings_vic2014.csv"
+        "url": "wildlife_sightings_vic2014.csv"
       },
       "transform": [
         { "filter": "datum.latitude !== '' && datum.longitude !== ''" },
