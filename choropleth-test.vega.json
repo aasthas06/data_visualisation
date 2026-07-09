@@ -1,0 +1,124 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "background": "transparent",
+ "title": {
+    "text": "Australian Threatened Species Density by State",
+    "anchor": "middle",
+    "fontSize": 20,
+    "color": "#006400",
+    "dy": -10,    
+    "offset": 0    
+  },
+  "width": 800,
+  "height": 700,
+  "config": {
+    "background": "#f0ede8",
+    "view": {"stroke": null}
+  },
+  "params": [
+    {
+      "name": "status_select",
+      "bind": {
+        "input": "select",
+        "options": [
+          "total_density",
+          "Critically Endangered_density",
+          "Endangered_density",
+          "Vulnerable_density"
+        ],
+        "labels": [
+          "All Species (Total)",
+          "Critically Endangered",
+          "Endangered",
+          "Vulnerable"
+        ],
+        "name": "Threatened Status:  "
+      },
+      "value": "total_density"
+    }
+  ],
+  "layer": [
+    {
+      "data": {
+        "url": "au-states-topo.json",
+        "format": {"type": "topojson", "feature": "austates"}
+      },
+      "transform": [
+        {
+          "lookup": "id",
+          "from": {
+            "data": {
+              "values": [
+                {"id": 0, "state": "NSW", "total": 760, "total_density": 9.4924, "Critically Endangered": 152, "Critically Endangered_density": 1.8985, "Endangered": 285, "Endangered_density": 3.5596, "Vulnerable": 284, "Vulnerable_density": 3.5472},
+                {"id": 1, "state": "VIC", "total": 357, "total_density": 15.6981, "Critically Endangered": 50, "Critically Endangered_density": 2.1986, "Endangered": 129, "Endangered_density": 5.6724, "Vulnerable": 161, "Vulnerable_density": 7.0795},
+                {"id": 2, "state": "QLD", "total": 612, "total_density": 3.5362, "Critically Endangered": 86, "Critically Endangered_density": 0.4969, "Endangered": 199, "Endangered_density": 1.1499, "Vulnerable": 290, "Vulnerable_density": 1.6757},
+                {"id": 3, "state": "SA", "total": 319, "total_density": 3.2436, "Critically Endangered": 31, "Critically Endangered_density": 0.3152, "Endangered": 116, "Endangered_density": 1.1795, "Vulnerable": 146, "Vulnerable_density": 1.4845},
+                {"id": 4, "state": "WA", "total": 614, "total_density": 2.427, "Critically Endangered": 106, "Critically Endangered_density": 0.419, "Endangered": 276, "Endangered_density": 1.091, "Vulnerable": 197, "Vulnerable_density": 0.7787},
+                {"id": 5, "state": "TAS", "total": 230, "total_density": 33.6252, "Critically Endangered": 48, "Critically Endangered_density": 7.0174, "Endangered": 77, "Endangered_density": 11.2571, "Vulnerable": 89, "Vulnerable_density": 13.0115},
+                {"id": 6, "state": "NT", "total": 155, "total_density": 1.1489, "Critically Endangered": 14, "Critically Endangered_density": 0.1038, "Endangered": 50, "Endangered_density": 0.3706, "Vulnerable": 78, "Vulnerable_density": 0.5782},
+                {"id": 7, "state": "ACT", "total": 71, "total_density": 301.1026, "Critically Endangered": 11, "Critically Endangered_density": 46.6497, "Endangered": 27, "Endangered_density": 114.5038, "Vulnerable": 33, "Vulnerable_density": 139.9491}
+              ]
+            },
+            "key": "id",
+            "fields": ["state", "total", "total_density", "Critically Endangered", "Critically Endangered_density", "Endangered", "Endangered_density", "Vulnerable", "Vulnerable_density"]
+          }
+        },
+        {
+          "calculate": "status_select === 'total_density' ? datum.total_density : status_select === 'Critically Endangered_density' ? datum['Critically Endangered_density'] : status_select === 'Endangered_density' ? datum['Endangered_density'] : datum['Vulnerable_density']",
+          "as": "density"
+        },
+        {
+          "calculate": "status_select === 'total_density' ? datum.total : status_select === 'Critically Endangered_density' ? datum['Critically Endangered'] : status_select === 'Endangered_density' ? datum['Endangered'] : datum['Vulnerable']",
+          "as": "raw_count"
+        },
+        {
+          "calculate": "datum.density > 0 ? log(datum.density) / log(10) : 0",
+          "as": "log_density"
+        }
+      ],
+      "projection": {"type": "mercator", "center": [134, -28], "scale": 1000},
+      "mark": {"type": "geoshape", "stroke": "#5a5a58", "strokeWidth": 1},
+      "encoding": {
+        "color": {
+  "field": "log_density",
+  "type": "quantitative",
+  "scale": {"scheme": "reds", "domainMin": 0},
+  "legend": {
+    "title": "Species per 10k km²",
+    "orient": "bottom",
+    "gradientLength": 300,
+    "gradientThickness": 20,
+    "labelFontSize": 16,
+    "titleFontSize": 18
+  }
+},
+        "tooltip": [
+          {"field": "state", "title": "State"},
+          {"field": "raw_count", "title": "Species Count (raw)"},
+          {"field": "density", "title": "Density (per 10,000 km²)", "format": ".2f"}
+        ]
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {"state": "NSW", "longitude": 146.5, "latitude": -32.0},
+          {"state": "VIC", "longitude": 144.5, "latitude": -37.0},
+          {"state": "QLD", "longitude": 144.0, "latitude": -22.0},
+          {"state": "SA", "longitude": 135.0, "latitude": -30.0},
+          {"state": "WA", "longitude": 121.0, "latitude": -27.0},
+          {"state": "TAS", "longitude": 146.5, "latitude": -42.0},
+          {"state": "NT", "longitude": 133.0, "latitude": -20.0},
+          {"state": "ACT", "longitude": 149.13, "latitude": -35.47}
+        ]
+      },
+      "projection": {"type": "mercator", "center": [134, -28], "scale": 1000},
+      "mark": {"type": "text", "fontSize": 14, "fontWeight": "bold", "color": "#333"},
+      "encoding": {
+        "longitude": {"field": "longitude", "type": "quantitative"},
+        "latitude": {"field": "latitude", "type": "quantitative"},
+        "text": {"field": "state"}
+      }
+    }
+  ]
+}

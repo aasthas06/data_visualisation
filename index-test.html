@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<title> Data Visualisation 2 </title>
+<script src="https://cdn.jsdelivr.net/npm/vega@5.22.1"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-lite@5.5.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-embed@6.21.0"></script>
+<link rel="stylesheet" href="style.css">
+</head>
+
+    <nav class="intro-menu">
+    <div class="intro-content">
+        <div class="intro-text-centered">
+            <img src="wildlife.png.webp" alt="Australian wildlife landscape" class="intro-image">
+            <h1>Wildlife in Australia</h1>
+        </div>
+
+<div class="section-divider"></div>
+            
+            <p>It's no secret that our planet is experiencing a global crisis; nature is degrading and wildlife is declining. It's happening faster than we can keep up. However, this isn't just an issue affecting distant regions. It's happening right around us, much closer than we can realise. But what exactly is driving this disaster? And how can we begin to reverse the trend? </p>
+            <p>This visualisation traces the journey of our changing environment, beginning at <a href="#section1">A Planet at Risk</a>, where we explore the global context. We then move to <a href="#section2">The Australian Index</a>, taking a look at the wildlife here in Australia, zooming in on the state of Victoria - a living mosaic of ecosystems.</p>
+            <p>The journey then uncovers the key question of <a href="#section3">Why Species are Disappearing</a>, and the unexpected drivers behind this rapid decline. Finally, we'll explore ways to <a href="#section4">Restore Our Ecosystem</a>, where real solutions are broken down into simple steps anyone can take to save our environment. Let's dive in!</p>
+        </div>
+    </div>
+</nav>
+
+
+<div class="page">
+
+
+    <div class="section-divider"></div>
+    <h2 id="section1"> ----------------------- A Planet at Risk -----------------------</h2>
+    <div class="section-divider"></div>
+</div>
+
+<p> Behind every data point lies a fragile, living ecosystem currently facing an unprecedented signal of distress. While change is inherent to the natural world, the current rate of biodiversity loss marks a historic and alarming shift that threatens the very foundations of our ecological security. We are no longer observing a slow-moving crisis but instead are witnessing an accelerating collapse that demands our immediate attention. This section pulls back the curtain on the global extinction crisis, 
+ tracing the trends from international patterns down to the specific pressures facing the diverse 
+ Australian landscapes. </p>
+
+
+
+<style>
+  .flex-container {
+    display: flex;
+    align-items: flex-start; /* Aligned to top so text doesn't look centered if it's much taller than the chart */
+    gap: 30px;               /* Increased gap for better readability */
+    margin-top: 5px;
+  }
+  .vis-container {
+    flex: 0 0 500px;         /* Reduced chart size to give more room to text */
+  }
+  .chart-description {
+    flex: 2;                 /* Increased from 1 to 2; makes the text box twice as 'greedy' for space */
+    line-height: 1.6;
+    max-width: 800px;        /* Optional: ensures text doesn't become too wide to read comfortably */
+  }
+</style>
+
+<div class="flex-container">
+  <div id="vis2" class="vis-container vis2-padded"></div>
+  <p class="chart-description">
+    Since the 1980s, a <strong>73%</strong> average decline was recorded in the size of monitored wildlife
+     populations gobally. As shown, <strong>Latin America and the Caribbean</strong> experienced the most dramatic
+      decline in their species, where wildlife populations plummeted from <strong>over 60% to approximately
+       5%</strong> of their 1980 levels. While other regions such as <strong>Asia and the Pacific and Afric</strong> also saw 
+       steady, degradation, falling to approximately <strong>40% and 25%</strong> respectively, illustrating how the 
+       severity of the decline is not limited to one part of the world. Contrastingly, <strong>Europe and 
+       Central Asia</strong> began the period with the highest numbers, experiencing a <strong>significant peak</strong> in 
+       the late 1980s, before sharply declining and eventually converging with North America by 2020, 
+       with a count of <strong>60-65%</strong>.
+    </p>
+</div>
+
+
+
+<style>
+  .flex-container {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    margin-top: 20px;
+  }
+  .chart-description {
+    flex: 1; /* Text takes up the available space on the left */
+    line-height: 1.6;
+  }
+  .right-aligned-chart {
+    flex: 0 0 700px; /* Fixed width for your chart container */
+  }
+</style>
+
+<div class="flex-container">
+  <p class="chart-description">
+    In 2024, the global landscape of biodiversity loss 
+    reveals significant disparities between nations and taxonomic groups. Madagascar 
+    emerges at the top of the list, reporting a staggering total of nearly <strong>4,000</strong> threatened
+     species; this figure is driven largely by its botanical crisis, with approximately 
+     <strong>3,038 plant species</strong> at risk, followed by <strong>575 threatened vertebrate</strong> species. 
+     When looking at the broader dataset, plants consistently emerge as the most 
+     vulnerable group, with every nation in the survey showing a high density of 
+     threatened flora - averaging roughly <strong>1,510 species</strong> per country. However, the data 
+     also highlights regional variations in specific threats; for instance, while plants 
+     dominate the overall totals, the United States reports the highest number of 
+     threatened <strong>invertebrates at 695</strong>, with Australia tracking closely behind at <strong>630</strong>
+  </p>
+  
+  <div id="vis1" class="right-aligned-chart"></div>
+</div>
+
+
+<p> While total species counts provide a baseline for the conservation crisis, 
+    they don't account for the 'biodiversity squeeze' happening in smaller 
+    jurisdictions. To gain a clearer understanding of the pressures facing wildlife 
+    across Australia, it is necessary to move beyond raw species counts and examine 
+    the density of threatened species within each region. </p>
+
+<div class="center-container12">
+    <div id="vis12"></div>
+</div>
+
+    <p>The map reveals a clear intensity gradient moving from the northwest 
+        to the southeast. Tasmania (TAS) stands out as the most critical "hot zone," 
+        shaded in deep red. Because Tasmania is an island with a high number of 
+        endemic species packed into a smaller landmass, 
+        the density of threatened species is significantly higher than anywhere else 
+        in the country, exceeding <strong>2.0</strong> species per unit area. </p>
+
+        <p>Following Tasmania, <strong>Victoria (VIC) and the New South Wales (NSW) </strong>
+            show high levels of density, with <strong>15.70</strong> species per unit area and 
+            <strong>9.49</strong> species per unit area, respectively. Interestingly, these are the 
+            regions that are the most densely populated by humans and have undergone 
+            the most significant land clearing and habitat fragmentation for urban 
+            development and agriculture. </p>
+
+        <p>While this is the case for all species, for some, 
+            the clock isn't just ticking; it is practically at midnight. 
+            When looked at the critically endangered category, the map of Australia 
+            transforms into a high-stakes emergency room, with one state clearly in 
+            the "red zone" - <strong>Tasmania</strong>, with a count of <strong>7.02</strong> species critcally endangered.</p>
+
+        <p>Other than Tasmania, regions showing significant density are 
+            <strong>Victoria (VIC), the ACT, and New South Wales (NSW)</strong> with a count of <strong>2.20 and 
+        1.90</strong> respectively.</p>
+
+<p>Ultimately, these maps and charts illustrate that conservation in Australia 
+    is a game of triage. While national protection is vital, the intensity of the 
+    danger is concentrated in the southeast. Protecting these high-density "hot zones" 
+    is the only way to ensure that Australia's most iconic and unique species don't 
+    move from the "Critically Endangered" list to the history books. </p>
+
+
+
+
+<div class="header-container">
+    <div class="section-divider"></div>
+    <h2 id="section2"> ----------------------- The Australian Index ----------------------- </h2>
+    <div class="section-divider"></div>
+</div>
+
+<p>While global trends paint a broader picture, the true reality of the extinction crisis 
+    is felt across the environments we share. Every country holds a unique story when it comes 
+    to biodiversity, and Australian Wildlife is one of both incredible richness and profound vulnerability.
+This section examines this dichotomy by mapping species-specific risks, sighting frequencies, and 
+regional threat distributions. By tracking the status and distribution of threatened species 
+across every state, the data identifies the 'front lines' of the extinction crisis. 
+Furthermore, by narrowing the focus to wildlife sightings in cities like Melbourne, 
+the data bridges the gap between distant environmental concerns and the nature that 
+exists right in our own backyards, clarifying which species are most at risk and where our 
+restorative efforts can have the greatest impact</p>
+
+<div class="side-by-side-wrapper">
+    <div id="vis3" class="side-by-side-chart2"></div>
+    <div id="vis8" class="side-by-side-chart2"></div>
+</div>
+
+<p>Australia is home to around 700,000 species which is roughly <strong>7 to 10%</strong> of all species on Earth,
+out of which <strong>200,000</strong> have been formally identified and named due to the isolated evolution of the continent.
+ Among these, more than <strong>2,100</strong> are officially listed as threatened, representing approximately <strong>1%</strong> of the Australian 
+ biodiversity being at risk. As shown, the data highlights a sharp contrast. Notably, mammals accoung for the highest count 
+ of the total endangered population at a whopping <strong>31.7%</strong>, along with birds contributing to a share of <strong>20.3%</strong>. 
+
+Most people believe we have ample time to prevent the extinction of wildlife; in reality, 
+many species are running on borrowed time. In the Australian animal kingdom, fishes and birds constitute
+approximately <strong>24%</strong> of biodiversity, with <strong>7.4%</strong> being endemic. The data demonstrates that this threat is not
+a future possibility, but an ongoing crisis. 
+
+While Fishes hold a share of <strong>16.7%</strong> in the count of the total endangered population, 
+they exhibit the highest total volume of species at risk with a count of <strong>20 species at High Risk 
+and 2 at Mid Risk</strong>. Mammals, on the other hand, place second on the chart with a count of <strong>1 of the 
+species at High Risk and 15 at Mid Risk</strong>. Although <strong>Fishes and Mammals</strong> exhibit the most number of 
+species at risk, groups such as <strong>Birds and Lizards and Snakes</strong>, demonstrate a concerning concentration 
+of <strong>high-risk species (9 and 6, respectively)</strong> relative to their total threatened count.</p>
+
+
+<style>
+  .flex-container {
+    display: flex;
+    align-items: left;
+    gap: 0px;
+    margin-top: 20px;
+  }
+  .vis-container {
+    flex: 0 0 700px; /* Adjust width to match your chart */
+  }
+  .chart-description {
+    flex: 1;
+    line-height: 1.6;
+  }
+</style>
+
+<div class="flex-container">
+
+  <div id="vis4" class="vis-container vis2-padded"></div>
+  <p class="chart-description">
+   It is often assumed that the species we see most often are the ones safest
+     from extinction. But in Victoria, this is far from reality. Appearances 
+     can be misleading and the presence of a few familiar creatures in backyards,
+      parks, and urban spaces is often mistaken for the health of an entire ecosystem. 
+      Data reveals this disconnect by mapping community observations, revealing the harsh
+       reality. As shown, one of the most sighted species, Gang-gang Cockatoo, with a count
+        of <strong>585</strong> sightings is <strong>endangered</strong>, revealing that even familiar backyard species are
+         under significant environmental pressure. Conversely, the Leadbeater's Possum - one 
+         of Victoria's few endemic mammals - appears at the bottom of the list with a mere <strong>19</strong> 
+         sightings, serving as a jarring reminder that for critically endangered species, 
+         scarcity is the reality, not just a data point.
+  </p>
+</div>
+
+<style>
+  .flex-container {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    margin-top: 20px;
+  }
+  .chart-description {
+    flex: 1; /* Text takes up the available space on the left */
+    line-height: 1.6;
+  }
+  .right-aligned-chart {
+    flex: 0 0 700px; /* Fixed width for your chart container */
+  }
+</style>
+
+<div class="flex-container">
+  <p class="chart-description-small">
+    While public attention is often drawn to Australia's more conspicuous wildlife encounters, 
+    a quieter biodiversity crisis is taking place across the nation. 
+    Many of Australia's most iconic species are experiencing significant 
+    environmental pressures, with <strong>birds in New South Wales</strong> and <strong>mammals in 
+    Western Australia</strong> among the most affected. As shown, there is a stark geographic 
+    divide in the Australian biodiversity crisis. While <strong>New South Wales</strong> takes 
+    the top spot for <strong>threatened bird</strong> species, with a count nearing <strong>37</strong>, <strong>Western 
+    Australia</strong> leads the pack for <strong>threatened mammals</strong>, clocking in at roughly 
+    <strong>30 species</strong>. Interestingly, the data shows that in almost every jurisdiction 
+    across the continent - from the coastal stretches of Victoria to the red 
+    dirt of the Northern Territory - the number of <strong>threatened bird species 
+    consistently outpaces that of mammals</strong>. The only exception to this rule 
+    is Western Australia, where <strong>mammals (29)</strong> seem to be under significantly 
+    more pressure than their <strong>feathered counterparts (23)</strong>. Whether due to habitat 
+    loss or the invasive 'feral duo' of cats and foxes, these figures highlight 
+    that the challenges to survival differ significantly depending on which side 
+    of the state border a species inhabits.
+  </p>
+  
+  <div id="vis5" class="right-aligned-chart"></div>
+</div>
+
+
+<p>While Melbourne&#39s urban landscape continued to expand in 2014, 
+the city&#39s green spaces quietly supported a remarkable diversity of wildlife. 
+Even within highly developed environments, parks, reserves, waterways, and vegetated 
+corridors provided important habitat and refuge for numerous species. 
+The data demonstrates that biodiversity is not confined to remote natural areas; 
+rather, a wide range of wildlife continues to persist within the metropolitan environment, 
+highlighting the ecological significance of urban green spaces in sustaining species presence 
+and connectivity across the city.
+</p>
+
+
+<div class="center-container">
+    <div id="vis13"></div>
+</div>
+
+<p>The map is dominated by sightings of <strong>light blue (Birds)</strong> 
+    and <strong>dark green (Plants)</strong> bubbles. These two groups represent 
+    the most frequently observed "residents," with some specific locations 
+    recording as many as <strong>131</strong> sightings in a single spot.
+</p>
+
+<p>While the density of the birds is not limited to one spot, 
+    they aren&#39t the only species peppered all across the map. 
+    The widespread distribution of <strong>orange bubbles (Insects)</strong>, 
+    highlights their extensive presence across the region, showing that 
+    these often-overlooked species are just as widespread as birds. 
+    While they may not attract the same level of attention, insects play a 
+    vital role in local ecosystems and can be found across a diverse range of habitats.
+</p>
+
+<p>In contrast to Birds and Insects, bubbles for <strong>Mammals (coral)</strong>, 
+<strong>Amphibians (light green)</strong>, and <strong>Reptiles (tan)</strong> are much 
+smaller and more isolated, with the highest count for them being </trong>2, 1 and 1, respectively</strong>. 
+These sightings are concentrated in specific pockets, suggesting that these groups are much 
+more dependent on high-quality, undisturbed habitats compared to the highly mobile bird 
+population.
+</p>
+
+<p>Interestingly, the distribution isn't even; 
+sightings are <strong>heavily clustered in the northern and eastern sections</strong> of the city area. 
+These "biodiversity hubs" highlight the critical role that urban planning and public parks 
+play in maintaining a connection between the metropolitan environment and the natural world.
+</p>
+
+<p>
+Overall, the data indicates that Melbourne is more than just a densely populated 
+urban centre; it also supports a rich and active ecological network. 
+Despite extensive urban development, a diverse range of species continues to occupy the 
+city's parks, waterways, reserves, and green corridors, demonstrating the important role these 
+spaces play in maintaining biodiversity within the metropolitan landscape.
+</p>
+
+<div class="section-divider"></div>
+<h2 id="section3"> ----------------------- Why Species are Disappearing ----------------------- </h2>
+<div class="section-divider"></div>
+</div>
+
+<p>Having examined how species are affected globally and locally, 
+    our journey moves on to the "why" behind this rapid decline. 
+    Not all threats are created equal; while many factors contribute to wildlife loss,
+     the data reveals a clear hierarchy of impact. The path to extinction is often paved by
+      a few dominant forces that drastically outpace all others. This section unveils these
+       primary drivers, isolating the major threats that demand our immediate attention. Furthermore, 
+       by mapping national land-use trends and long-term fire-affected areas across states, 
+       the data highlights how human activity and environmental instability reshape the landscape.
+    </p>
+
+
+
+<div class="center-container">
+    <div id="vis6"></div>
+</div>
+
+<p> While climate change and pollution are often framed as the primary threats to wildlife, 
+    they account for only <strong>8.8%</strong> and <strong>1.1%</strong> of endangerment cases, respectively. 
+    In reality, the crisis is driven by more localized and immediate ecological pressures. 
+    Invasive species and diseases stand out as the most significant threat, 
+    affecting <strong>42.2%</strong> of endangered species, while habitat loss, 
+    fragmentation, and degradation account for an additional <strong>26%</strong>. 
+    Together, these two factors represent over <strong>two-thirds</strong> of the crisis, 
+    showing that the biggest threats to our wildlife aren't the global issues we hear about most, 
+    but the direct impact of invasive species and the destruction of natural habitats </p>
+
+<div class="flex-container">
+  <div id="vis7" class="vis-container vis2-padded"></div>
+  <p class="chart-description">
+    As shown above, adverse fire regimes are one of the leading causes of endangerment in Australia,
+    affecting <strong>23.1%</strong> of the species. When these fire events become too frequent,
+    intense, or large-scale, they fundamentally alter the structure of our landscapes -
+    destroying vital habitats like hollow-bearing trees and understory vegetation that species
+    rely on for survival. The <strong>2019</strong>-<strong>2020</strong> season, famously known
+    as the "Black Summer" stands out as a continental fire event of unprecedented scale,
+    particularly impacting the southern and eastern states like NSW with a burnt area of
+    <strong>5,434,275</strong> pixels, or roughly <strong>135,856,875</strong> hectares,
+    where <strong>1</strong> pixel = <strong>25</strong> hectares, and Queensland with a
+    burnt area of <strong>5,909,144</strong> pixels or roughly
+    <strong>147,728,600</strong> hectares.
+  </p>
+</div>
+
+
+
+
+<style>
+  .flex-container {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    margin-top: 20px;
+  }
+  .chart-description {
+    flex: 1; /* Text takes up the available space on the left */
+    line-height: 1.6;
+  }
+  .right-aligned-chart {
+    flex: 0 0 700px; /* Fixed width for your chart container */
+  }
+</style>
+
+<div class="flex-container">
+  <p class="chart-description">
+    Another one of the major causes as highlighted earlier is habitat loss, which is a 
+    two-fold crisis driven by land management and climate-exacerbated natural disasters. 
+    One of the primary drivers of habitat loss is land use by humans, and in the field 
+    of conservation, it is considered one of the primary drivers of biodiversity decline. 
+    As shown in the chart, one of the most extensive uses of land is 
+    <strong>Grazing native vegetation</strong>, consistently covering over 
+    <strong>320 million hectares</strong> across all the <strong>3</strong> periods. 
+    However, as shown, the second main usage, Managed Resource Protection shows an 
+    upward trend increasing from <strong>124.5 Million hectares in 2010 - 2011</strong> 
+    to <strong>149.3 Million hectares by 2020 - 2021</strong>, signalling towards a 
+    policy shift toward preserving landscape structure.
+  </p>
+  
+  <div id="vis9" class="right-aligned-chart"></div>
+</div>
+
+<div class="section-divider"></div>
+<h2 id="section4"> ----------------------- Restoring Our Ecosystem ----------------------- </h2>
+<div class="section-divider"></div>
+</div>
+<p>While the previous section paints a sobering picture of the threats facing our wildlife, it is only half the story. 
+    From government-led conservation strategies to grassroots community initiatives, a coordinated effort is underway to 
+    turn the tide and give our ecosystem the breathing room it needs to recover. By examining the rapid growth in the Australian protected 
+    areas alongside the dedicated hours contributed by Victorian environmental volunteers, we can see a move toward a more resilient ecosystem.
+    The following section explores how these two forces - the strategic expansion of protected zones and the active participation of citizen conservationists - create a comprehensive, approach to environmental restoration</p>
+
+<div class="side-by-side-wrapper">
+    <div id="vis10" class="side-by-side-chart"></div>
+    <div id="vis11" class="side-by-side-chart"></div>
+</div>
+
+<p>Recognising that habitat loss is one of the major causes of the declining species population, 
+    the Australian government made a concerted effort to scale up the protected area network. 
+    This can be seen in the increase of the percentage of protected land. 
+    From 2004, the percentage for Terrestrial area has more than doubled <strong>(11% to 23%)</strong>, 
+    while the percentage for Marine 
+    has increased by almost <strong>5 times</strong> <strong>(10% to 49%)</strong>! </p>
+<p>While such government-led projects provide the space necessary for conservation, 
+    the day-to-day work of restoration relies heavily on community intiatives. 
+    As shown, "Caring for landscapes" <strong>(35%)</strong> and 
+    "Recreation/Nature" <strong>(20%)</strong> make up more than 
+    <strong>(50%)</strong> of the environmental volunteering hours, 
+    showing how the public is heavily invested in maintaining our ecosystems. 
+    However, the data also reveals a surprising room for improvement, 
+    since only <strong>(7%)</strong> of the time is dedicated towards "Wildlife rescue" - a critical area that, 
+    if supported, could empower a more effective response to the critical threats 
+    identified earlier.</p>
+
+</div>
+
+<p>Overall, the shift from a planet at risk to the specific vulnerabilities of the 
+Australian Index highlights a sobering reality: the drivers of species extinction are 
+accelerating at an unprecedented pace. This visualization has aimed to bridge complex 
+environmental datasets with actionable insight, moving beyond the "why" of species loss toward 
+the "how" of ecosystem recovery. While Australia&#39s biodiversity decline is a complex, 
+multifaceted challenge, it is not irreversible and can be addressed through sustained 
+and coordinated restoration efforts.
+</p>
+
+
+<footer class="footer-container" style="padding: 40px; background-color: transparent; font-family: sans-serif; font-size: 13px; line-height: 1.6;">
+    <hr>
+    <h3 style="text-align: center;">Metadata and References</h3>
+    
+    <div style="display: flex; flex-wrap: wrap; gap: 30px; justify-content: space-between;">
+        
+        <!-- DATA SOURCES -->
+        <div style="flex: 1; min-width: 300px;">
+            <h4>Data Sources</h4>
+            <ul>
+                <li><strong>Global Context:</strong> <a href="https://ourworldindata.org/2024-living-planet-index">Our World in Data - Living Planet Index 2024</a></li>
+                <li><strong>National Species Lists:</strong> <a href="https://data.gov.au/data/dataset/threatened-species-state-lists/">Data.gov.au - Threatened Species State Lists</a></li>
+                <li><strong>Species Trends:</strong> <a href="https://tsx.org.au/tsx2025/">Threatened Species Index (TSX)</a></li>
+                <li><strong>Species Statistics:</strong> <a href="https://www.dcceew.gov.au/science-research/abrs/publications/other/numbers-living-species/executive-summary">DCCEEW Executive Summary</a></li>
+                <li><strong>Local Melbourne Sightings:</strong> <a href="https://discover.data.vic.gov.au/dataset/wildlife-sightings-bioblitz-2014">Data Vic - Bioblitz 2014</a></li>
+                <li><strong>Endangered Observations:</strong> <a href="https://biocache.ala.org.au/">Atlas of Living Australia (ALA) Occurrence Search</a></li>
+                <li><strong>Threat Impacts:</strong> <a href="https://figshare.com/articles/dataset/Taxon-threat-impact_dataset/13150943/1?file=28596189">Figshare Taxon-Threat Dataset</a></li>
+                <li><strong>Land Use Trends:</strong> <a href="https://www.abs.gov.au/statistics/environment/environmental-accounts/national-land-account-experimental-estimates/latest-release">ABS National Land Account</a> & <a href="https://www.agriculture.gov.au/abares">ABARES</a></li>
+                <li><strong>Wildfire Data:</strong> <a href="https://www.agriculture.gov.au/abares/forestsaustralia/forest-data-maps-and-tools/spatial-data/forest-fire">ABARES Forest Fire Spatial Data</a></li>
+                <li><strong>Protected Areas:</strong> <a href="https://www.abs.gov.au/statistics/measuring-what-matters/measuring-what-matters-themes-and-indicators/sustainable/protected-areas">ABS Measuring What Matters</a></li>
+            </ul>
+        </div>
+
+        <!-- AUTHORSHIP & TOOLS -->
+        <div style="flex: 1; min-width: 300px;">
+            <h4>Authorship & Acknowledgments</h4>
+            <p><strong>Author:</strong> Aastha.S</p>
+            <p><strong>Date:</strong> 29 May 2026</p>
+            <p><strong>Libraries:</strong> Created using <a href="https://vega.github.io/vega-lite/">Vega-Lite</a>, hosted via GitHub Pages.</p>
+        </div>
+
+    </div>
+</footer>
+
+
+
+
+
+<script type="text/javascript">
+    var spec1 = "stacked_area1-test.vega.json";
+    var spec2 = "line_chart2-test.vega.json";
+    var spec3 = "donutch.vega.json";
+    var spec4 = "lollipopch-test.vega.json";
+    var spec5 = "birdsvsmammals4-test.vega.json";
+    var spec6 = "Top_threats.vega.json";
+    var spec7 = "heatmap.vega.json";
+    var spec8 = "dumbbell_species_risk-test.vega.json";
+    var spec9 = "land_use.vega.json";
+    var spec10 = "slope_chart.vega.json";
+    var spec11 = "radial_chart.vega.json";
+    var spec12 = "choropleth-test.vega.json";
+    var spec13 = "dot_map-test.vega.json";
+
+    vegaEmbed('#vis1', spec1).catch(console.error);
+    vegaEmbed('#vis2', spec2).catch(console.error);
+    vegaEmbed('#vis3', spec3).catch(console.error);
+    vegaEmbed('#vis4', spec4).catch(console.error);
+    vegaEmbed('#vis5', spec5).catch(console.error);
+    vegaEmbed('#vis6', spec6).catch(console.error);
+    vegaEmbed('#vis7', spec7).catch(console.error);
+    vegaEmbed('#vis8', spec8).catch(console.error);
+    vegaEmbed('#vis9', spec9).catch(console.error);
+    vegaEmbed('#vis10', spec10).catch(console.error);
+    vegaEmbed('#vis11', spec11).catch(console.error);
+    vegaEmbed('#vis12', spec12).catch(console.error);
+    vegaEmbed('#vis13', spec13).catch(console.error);
+</script>
+</body>
+
+</html>
