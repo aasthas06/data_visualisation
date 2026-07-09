@@ -1,0 +1,116 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Risk Among Different Species in Australia",
+    "anchor": "middle",
+    "fontSize": 20,
+    "dy": -5,
+    "offset": 5,
+    "color": "#006400"
+  },
+  "background": "transparent",
+  "width": 600,
+  "height": 400,
+  "data": {
+    "url": "Species_risk.csv",
+    "format": {"type": "csv"}
+  },
+  "transform": [
+    {
+      "calculate": "toNumber(datum['> 50% risk'])",
+      "as": "high_risk"
+    },
+    {
+      "calculate": "toNumber(trim(datum['20 to 50% risk ']))",
+      "as": "mid_risk"
+    },
+    {
+      "fold": ["high_risk", "mid_risk"],
+      "as": ["Risk_Level", "Count"]
+    },
+    {
+      "calculate": "toNumber(datum.Count)",
+      "as": "Count"
+    },
+    {
+      "calculate": "datum.Risk_Level == 'high_risk' ? 'High risk' : 'Mid risk'",
+      "as": "Formatted_Risk_Level"
+    }
+  ],
+  "encoding": {
+    "y": {
+      "field": "Group",
+      "type": "nominal",
+      "title": "Animal Group",
+      "sort": {"field": "Count", "op": "max", "order": "descending"},
+      "axis": {
+        "ticks": false,
+        "domain": false,
+        "offset": 5,
+        "titleFontSize": 18,
+        "labelFontSize": 16,
+        "titleColor": "#000000",
+        "labelColor": "#000000"
+      }
+    },
+    "x": {
+      "field": "Count",
+      "type": "quantitative",
+      "title": "Number of species at risk",
+      "scale": {"zero": true, "nice": true},
+      "axis": {
+        "grid": true,
+        "gridOpacity": 0.2,
+        "titleFontSize": 18,
+        "labelFontSize": 16,
+        "titleColor": "#000000",
+        "labelColor": "#000000"
+      }
+    }
+  },
+  "layer": [
+    {
+      "mark": {"type": "line", "color": "#5a5a58", "strokeWidth": 2.5, "opacity": 0.9},
+      "encoding": {"detail": {"field": "Group", "type": "nominal"}}
+    },
+    {
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "size": 150,
+        "tooltip": true,
+        "opacity": 1,
+        "stroke": "#9e9e9d",
+        "strokeWidth": 1.5
+      },
+      "encoding": {
+        "color": {
+  "field": "Risk_Level",
+  "type": "nominal",
+  "scale": {"domain": ["high_risk", "mid_risk"], "range": ["#8A1919", "#E67575"]},
+  "legend": {
+    "title": "Risk in 20 Years",
+    "labelExpr": "datum.label === 'high_risk' ? 'High risk' : 'Mid risk'",
+    "orient": "bottom",
+    "offset": 40,
+    "titleFontSize": 18,
+    "labelFontSize": 18,
+    "symbolSize": 200,
+    "symbolStrokeWidth": 3,
+    "titleColor": "#000000",
+    "labelColor": "#000000"
+  }
+},
+        "tooltip": [
+          {"field": "Group", "title": "Group"},
+          {"field": "Formatted_Risk_Level", "title": "Risk level"},
+          {"field": "Count", "title": "Species count", "type": "quantitative"}
+        ]
+      }
+    }
+  ],
+  "config": {
+    "view": {"stroke": null},
+    "font": "system-ui, sans-serif"
+  }
+}

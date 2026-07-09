@@ -1,0 +1,103 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "background": "transparent",
+  "title": {
+    "text": "Most Sighted Species in Victoria",
+    "anchor": "middle",
+    "fontSize": 20,
+    "color": "#006400",
+    "dy": -10
+  },
+  "data": {
+    "url": "mostseenspecies.csv"
+  },
+  "width": 600,
+  "height": 400,
+  "transform": [
+    {
+      "aggregate": [{"op": "count", "as": "TotalRecords"}],
+      "groupby": ["CommonName", "MaxStatus"]
+    },
+    {
+      "window": [{"op": "rank", "as": "rank"}],
+      "sort": [{"field": "TotalRecords", "order": "descending"}]
+    },
+    {
+      "filter": "datum.rank <= 12 || datum.CommonName == 'Leadbeater\\'s Possum'"
+    }
+  ],
+  "layer": [
+    {
+      "mark": {"type": "rule", "color": "#696968", "strokeWidth": 2.2},
+      "encoding": {
+        "y": {
+          "field": "CommonName",
+          "type": "nominal",
+          "sort": {"field": "TotalRecords", "order": "descending"},
+          "axis": {
+            "title": "Species Name",
+            "titleFontSize": 16,
+            "labelFontSize": 14
+          }
+        },
+        "x": {
+          "field": "TotalRecords",
+          "type": "quantitative",
+          "title": "Number of Sightings",
+          "axis": {
+            "titleFontSize": 16,
+            "labelFontSize": 14
+          }
+        }
+      }
+    },
+    {
+      "params": [
+        {
+          "name": "hover",
+          "select": {"type": "point", "on": "mouseover", "fields": ["MaxStatus"]}
+        }
+      ],
+      "mark": {
+        "type": "circle",
+        "size": 250,
+        "stroke": "#5a5a58",
+        "strokeWidth": 1.5,
+        "cursor": "pointer"
+      },
+      "encoding": {
+        "y": {
+          "field": "CommonName",
+          "type": "nominal",
+          "sort": {"field": "TotalRecords", "order": "descending"}
+        },
+        "x": {"field": "TotalRecords", "type": "quantitative"},
+        "color": {
+          "field": "MaxStatus",
+          "type": "nominal",
+          "scale": {
+            "domain": ["Critically Endangered", "Endangered", "Vulnerable", "Near Threatened"],
+            "range": ["#631212", "#B12020", "#E67575", "#F4C3C3"]
+          },
+          "legend": {
+            "title": "Threat Status",
+            "titleFontSize": 18,
+            "labelFontSize": 16,
+            "symbolSize": 350,
+            "symbolStrokeWidth": 2,
+            "padding": 10
+          }
+        },
+        "fillOpacity": {
+          "condition": {"param": "hover", "value": 1},
+          "value": 1
+        },
+        "tooltip": [
+          {"field": "CommonName", "title": "Species"},
+          {"field": "MaxStatus", "title": "Status"},
+          {"field": "TotalRecords", "title": "Sightings"}
+        ]
+      }
+    }
+  ]
+}

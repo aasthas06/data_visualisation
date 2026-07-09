@@ -1,0 +1,74 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "background": "transparent",
+  "title": {
+    "text": "Threatened Species Globally 2024",
+    "anchor": "middle",
+    "dy": -10,
+    "fontSize": 20,
+    "offset": 5,
+    "color": "#006400"
+  },
+  "width": 600,
+  "height": 400,
+  "data": {
+    "url": "Threatened_Species.csv",
+    "format": { "type": "csv", "parse": { "Year": "number" } }
+  },
+  "transform": [
+    { "filter": "datum.Year == 2024" },
+    { "filter": "datum.Series != 'Threatened Species: Total (number)'" },
+    { "filter": "datum.Series != null && datum.Value != null" },
+    { "calculate": "toNumber(replace(datum.Value, ',', ''))", "as": "ValueNum" },
+    {
+      "calculate": "datum.Series == 'Threatened Species: Vertebrates (number)' ? 'Vertebrates' : datum.Series == 'Threatened Species: Invertebrates (number)' ? 'Invertebrates' : 'Plants'",
+      "as": "SpeciesGroup"
+    },
+    {
+      "joinaggregate": [ { "op": "sum", "field": "ValueNum", "as": "Total_Per_Country" } ],
+      "groupby": ["Country"]
+    },
+    {
+      "window": [{ "op": "dense_rank", "as": "rank" }],
+      "sort": [{ "field": "Total_Per_Country", "order": "descending" }],
+      "frame": [null, null]
+    },
+    { "filter": "datum.rank <= 10 || datum.Country == 'Australia'" }
+  ],
+  "mark": { "type": "bar", "stroke": "#504f4f", "strokeWidth": 1, "tooltip": true },
+  "encoding": {
+    "x": {
+      "field": "ValueNum",
+      "type": "quantitative",
+      "title": "Number of Threatened Species",
+      "axis": { "titleFontSize": 16, "labelFontSize": 14 }
+    },
+    "y": {
+      "field": "Country",
+      "type": "nominal",
+      "sort": { "field": "Total_Per_Country", "order": "descending" },
+      "title": "Country",
+      "axis": { "labelAngle": 0, "titleFontSize": 16, "labelFontSize": 14 }
+    },
+    "color": {
+      "field": "SpeciesGroup",
+      "type": "nominal",
+      "scale": {
+        "domain": ["Vertebrates", "Invertebrates", "Plants"],
+        "range": ["#B0E0E6", "#CD853F", "#2E8B57"]
+      },
+      "legend": { 
+        "title": "Species Group", 
+        "titleFontSize": 18, 
+        "labelFontSize": 16,
+        "symbolSize": 300,
+        "symbolStrokeWidth": 2
+      }
+    },
+    "tooltip": [
+      { "field": "Country", "type": "nominal", "title": "Country" },
+      { "field": "SpeciesGroup", "type": "nominal", "title": "Category" },
+      { "field": "ValueNum", "type": "quantitative", "title": "Count", "format": "," }
+    ]
+  }
+}
